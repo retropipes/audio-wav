@@ -8,7 +8,7 @@ public abstract class WAVFactory extends Thread {
     private static int ACTIVE_MEDIA_COUNT = 0;
     private static int MAX_MEDIA_ACTIVE = 5;
     private static WAVFactory[] ACTIVE_MEDIA = new WAVFactory[WAVFactory.MAX_MEDIA_ACTIVE];
-    private static ThreadGroup MEDIA_GROUP = new ThreadGroup("Media Players");
+    private static ThreadGroup MEDIA_GROUP = new ThreadGroup("WAV Media Players");
     private static WAVExceptionHandler meh = new WAVExceptionHandler();
 
     // Constructor
