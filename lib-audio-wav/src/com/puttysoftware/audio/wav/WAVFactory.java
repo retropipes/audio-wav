@@ -13,7 +13,7 @@ public abstract class WAVFactory extends Thread {
 
     // Constructor
     protected WAVFactory(final ThreadGroup group) {
-        super(group, "Media Player " + WAVFactory.ACTIVE_MEDIA_COUNT);
+        super(group, "WAV Media Player " + WAVFactory.ACTIVE_MEDIA_COUNT);
     }
 
     // Methods
