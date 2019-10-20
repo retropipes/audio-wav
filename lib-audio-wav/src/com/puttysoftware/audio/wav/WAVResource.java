@@ -4,31 +4,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import com.puttysoftware.errorlogger.ErrorLogger;
+
 class WAVResource extends WAVFactory {
-    private final URL soundURL;
+  private final URL soundURL;
 
-    public WAVResource(final URL resURL) {
-        super();
-        this.soundURL = resURL;
-    }
+  public WAVResource(final URL resURL) {
+    super();
+    this.soundURL = resURL;
+  }
 
-    @Override
-    public void start() {
-        if (this.soundURL != null) {
-            try (InputStream inputStream = this.soundURL.openStream()) {
-                new WAVPlayer(inputStream).start();
-            } catch (final IOException e1) {
-                return;
-            }
-        }
+  @Override
+  public void start(final ErrorLogger logger) {
+    if (this.soundURL != null) {
+      try (InputStream inputStream = this.soundURL.openStream()) {
+        new WAVPlayer(inputStream, logger).start();
+      } catch (final IOException e) {
+        logger.logError(e);
+      }
     }
+  }
 
-    @Override
-    public void play() throws IOException {
-        if (this.soundURL != null) {
-            try (InputStream inputStream = this.soundURL.openStream()) {
-                new WAVPlayer(inputStream).start();
-            }
-        }
+  @Override
+  public void play(final ErrorLogger logger) {
+    if (this.soundURL != null) {
+      try (InputStream inputStream = this.soundURL.openStream()) {
+        new WAVPlayer(inputStream, logger).start();
+      } catch (final IOException e) {
+        logger.logError(e);
+      }
     }
+  }
 }

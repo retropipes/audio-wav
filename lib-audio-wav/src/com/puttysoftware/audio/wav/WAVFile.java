@@ -4,39 +4,41 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import com.puttysoftware.errorlogger.ErrorLogger;
+
 class WAVFile extends WAVFactory {
-    private final String filename;
+  private final String filename;
 
-    public WAVFile(final String wavfile) {
-        super();
-        this.filename = wavfile;
-    }
+  public WAVFile(final String wavfile) {
+    super();
+    this.filename = wavfile;
+  }
 
-    @Override
-    public void start() {
-        if (this.filename != null) {
-            final File soundFile = new File(this.filename);
-            if (soundFile.exists()) {
-                try (FileInputStream inputStream = new FileInputStream(
-                        soundFile)) {
-                    new WAVPlayer(inputStream).start();
-                } catch (final IOException e1) {
-                    return;
-                }
-            }
+  @Override
+  public void start(final ErrorLogger logger) {
+    if (this.filename != null) {
+      final File soundFile = new File(this.filename);
+      if (soundFile.exists()) {
+        try (FileInputStream inputStream = new FileInputStream(soundFile)) {
+          new WAVPlayer(inputStream, logger).start();
+        } catch (final IOException e) {
+          logger.logError(e);
         }
+      }
     }
+  }
 
-    @Override
-    public void play() throws IOException {
-        if (this.filename != null) {
-            final File soundFile = new File(this.filename);
-            if (soundFile.exists()) {
-                try (FileInputStream inputStream = new FileInputStream(
-                        soundFile)) {
-                    new WAVPlayer(inputStream).start();
-                }
-            }
+  @Override
+  public void play(final ErrorLogger logger) {
+    if (this.filename != null) {
+      final File soundFile = new File(this.filename);
+      if (soundFile.exists()) {
+        try (FileInputStream inputStream = new FileInputStream(soundFile)) {
+          new WAVPlayer(inputStream, logger).start();
+        } catch (final IOException e) {
+          logger.logError(e);
         }
+      }
     }
+  }
 }

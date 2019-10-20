@@ -1,36 +1,38 @@
 package com.puttysoftware.audio.wav;
 
-import java.io.IOException;
 import java.net.URL;
 
+import com.puttysoftware.errorlogger.ErrorLogger;
+
 public abstract class WAVFactory {
-    // Constants
-    protected static final int EXTERNAL_BUFFER_SIZE = 4096; // 4Kb
+  // Constants
+  protected static final int EXTERNAL_BUFFER_SIZE = 4096; // 4Kb
 
-    // Constructor
-    protected WAVFactory() {
-        super();
-    }
+  // Constructor
+  protected WAVFactory() {
+    super();
+  }
 
-    // Methods
-    public abstract void start();
+  // Methods
+  public abstract void start(final ErrorLogger logger);
 
-    public abstract void play() throws IOException;
+  public abstract void play(final ErrorLogger logger);
 
-    // Factories
-    public static WAVFactory loadFile(final String file) {
-        return new WAVFile(file);
-    }
+  // Factories
+  public static WAVFactory loadFile(final String file) {
+    return new WAVFile(file);
+  }
 
-    public static WAVFactory loadResource(final URL resource) {
-        return new WAVResource(resource);
-    }
+  public static WAVFactory loadResource(final URL resource) {
+    return new WAVResource(resource);
+  }
 
-    public static void playFile(final String file) throws IOException {
-        new WAVFile(file).play();
-    }
+  public static void playFile(final String file, final ErrorLogger logger) {
+    new WAVFile(file).play(logger);
+  }
 
-    public static void playResource(final URL resource) throws IOException {
-        new WAVResource(resource).play();
-    }
+  public static void playResource(final URL resource,
+      final ErrorLogger logger) {
+    new WAVResource(resource).play(logger);
+  }
 }
