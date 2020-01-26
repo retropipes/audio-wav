@@ -6,9 +6,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/ErrorLogger-1.0.0.jar" sourcepath="lib/ErrorLogger-src-1.0.0.jar">
+	<classpathentry kind="lib" path="/Users/ericahnell/Stuff/Development/Repos/older-java-games/extlib/com.puttysoftware.desktop.module.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/lib-audio-wav/lib/ErrorLogger-javadoc-1.0.0.jar!/"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
