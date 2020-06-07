@@ -12,5 +12,4 @@ module com.puttysoftware.audio.wav {
     exports com.puttysoftware.audio.wav;
 
     requires java.desktop;
-    requires transitive com.puttysoftware.errorlogger;
 }

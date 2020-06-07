@@ -1,59 +1,33 @@
 package com.puttysoftware.audio.wav;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
+public abstract class WAVPlayer {
+	// Constants
+	protected static final int EXTERNAL_BUFFER_SIZE = 4096; // 4Kb
 
-import com.puttysoftware.errorlogger.ErrorLogger;
+	// Constructor
+	protected WAVPlayer() {
+		super();
+	}
 
-class WAVPlayer extends Thread {
-  private final InputStream soundStream;
-  private final ErrorLogger logger;
+	// Methods
+	public abstract void play();
 
-  public WAVPlayer(final InputStream stream, final ErrorLogger errorLogger) {
-    super();
-    this.soundStream = stream;
-    this.logger = errorLogger;
-  }
+	// Factories
+	public static WAVPlayer loadFile(final String file) {
+		return new WAVFile(file);
+	}
 
-  @Override
-  public void run() {
-    try (AudioInputStream audioInputStream = AudioSystem
-        .getAudioInputStream(this.soundStream)) {
-      final AudioFormat format = audioInputStream.getFormat();
-      final DataLine.Info info = new DataLine.Info(SourceDataLine.class,
-          format);
-      try (SourceDataLine auline = (SourceDataLine) AudioSystem.getLine(info)) {
-        auline.open(format);
-        auline.start();
-        int nBytesRead = 0;
-        final byte[] abData = new byte[WAVFactory.EXTERNAL_BUFFER_SIZE];
-        try {
-          while (nBytesRead != -1) {
-            nBytesRead = audioInputStream.read(abData, 0, abData.length);
-            if (nBytesRead >= 0) {
-              auline.write(abData, 0, nBytesRead);
-            }
-          }
-        } catch (final IOException e) {
-          this.logger.logError(e);
-        } finally {
-          auline.drain();
-        }
-      } catch (final LineUnavailableException e) {
-        this.logger.logError(e);
-      }
-    } catch (final UnsupportedAudioFileException e) {
-      this.logger.logError(e);
-    } catch (final IOException e) {
-      this.logger.logError(e);
-    }
-  }
+	public static WAVPlayer loadResource(final URL resource) {
+		return new WAVResource(resource);
+	}
+
+	public static void playFile(final String file) {
+		new WAVFile(file).play();
+	}
+
+	public static void playResource(final URL resource) {
+		new WAVResource(resource).play();
+	}
 }
