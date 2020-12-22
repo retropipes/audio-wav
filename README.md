@@ -1,4 +1,4 @@
-# lib-java-audio-wav
+# WAV Audio Library
 
 Java class library providing WAV format audio playback.
 
