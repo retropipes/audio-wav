@@ -23,14 +23,14 @@ class WAVFile extends WAVPlayer {
 
     @Override
     public void play() {
-        if (this.filename != null) {
-            final File soundFile = new File(this.filename);
-            if (soundFile.exists()) {
-                try (FileInputStream inputStream = new FileInputStream(
-                        soundFile)) {
-                    new Thread() {
-                        @Override
-                        public void run() {
+        new Thread() {
+            @Override
+            public void run() {
+                if (WAVFile.this.filename != null) {
+                    final File soundFile = new File(WAVFile.this.filename);
+                    if (soundFile.exists()) {
+                        try (FileInputStream inputStream = new FileInputStream(
+                                soundFile)) {
                             try (AudioInputStream audioInputStream = AudioSystem
                                     .getAudioInputStream(inputStream)) {
                                 final AudioFormat format = audioInputStream
@@ -68,12 +68,12 @@ class WAVFile extends WAVPlayer {
                             } catch (final IOException e) {
                                 throw new WAVException(e);
                             }
+                        } catch (final IOException e) {
+                            throw new WAVException(e);
                         }
-                    }.start();
-                } catch (final IOException e) {
-                    throw new WAVException(e);
+                    }
                 }
             }
-        }
+        }.start();
     }
 }

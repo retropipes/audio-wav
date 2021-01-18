@@ -12,34 +12,35 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 public class WAVException extends RuntimeException implements Externalizable {
+    public WAVException() {
+        super();
+    }
 
-	public WAVException() {
-		super();
-	}
+    public WAVException(String message) {
+        super(message);
+    }
 
-	public WAVException(String message) {
-		super(message);
-	}
+    public WAVException(Throwable cause) {
+        super(cause);
+    }
 
-	public WAVException(Throwable cause) {
-		super(cause);
-	}
+    public WAVException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public WAVException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public WAVException(String message, Throwable cause,
+            boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 
-	public WAVException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        throw new NotSerializableException();
+    }
 
-	@Override
-	public void writeExternal(ObjectOutput out) throws IOException {
-		throw new NotSerializableException();
-	}
-
-	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		throw new NotSerializableException();
-	}
+    @Override
+    public void readExternal(ObjectInput in)
+            throws IOException, ClassNotFoundException {
+        throw new NotSerializableException();
+    }
 }

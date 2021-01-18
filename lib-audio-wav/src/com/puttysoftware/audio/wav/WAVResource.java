@@ -24,10 +24,10 @@ class WAVResource extends WAVPlayer {
     @Override
     public void play() {
         if (this.soundURL != null) {
-            try (InputStream inputStream = this.soundURL.openStream()) {
-                new Thread() {
-                    @Override
-                    public void run() {
+            new Thread() {
+                @Override
+                public void run() {
+                    try (InputStream inputStream = WAVResource.this.soundURL.openStream()) {
                         try (AudioInputStream audioInputStream = AudioSystem
                                 .getAudioInputStream(inputStream)) {
                             final AudioFormat format = audioInputStream
@@ -64,11 +64,11 @@ class WAVResource extends WAVPlayer {
                         } catch (final IOException e) {
                             throw new WAVException(e);
                         }
+                    } catch (final IOException e) {
+                        throw new WAVException(e);
                     }
-                }.start();
-            } catch (final IOException e) {
-                throw new WAVException(e);
-            }
+                }
+            }.start();
         }
     }
 }
