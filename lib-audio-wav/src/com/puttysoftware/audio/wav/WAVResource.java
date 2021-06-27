@@ -27,7 +27,8 @@ class WAVResource extends WAVPlayer {
             new Thread() {
                 @Override
                 public void run() {
-                    try (InputStream inputStream = WAVResource.this.soundURL.openStream()) {
+                    try (InputStream inputStream = WAVResource.this.soundURL
+                            .openStream()) {
                         try (AudioInputStream audioInputStream = AudioSystem
                                 .getAudioInputStream(inputStream)) {
                             final AudioFormat format = audioInputStream
